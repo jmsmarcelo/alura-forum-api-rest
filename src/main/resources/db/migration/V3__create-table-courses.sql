@@ -1,0 +1,7 @@
+CREATE TABLE courses(
+	id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(100) NOT NULL UNIQUE,
+	category_id BIGINT NOT NULL,
+	active TINYINT DEFAULT 1,
+	CONSTRAINT fk_courses_category_id FOREIGN KEY(category_id) REFERENCES categories(id)
+) ENGINE=InnoDB;

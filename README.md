@@ -19,6 +19,7 @@
   - [x] Adicionar um novo curso
   - [x] Adicionar uma resposta no tópico
   - [x] status do tópico
+  - [x] Swagger UI
 
 ### Tecnologias utilizadas:
 - [Eclipse](https://www.eclipse.org/)

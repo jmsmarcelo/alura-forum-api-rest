@@ -32,6 +32,9 @@
 ### Requisitos:
   - MySQL 8
   - Java 17 ou superior
+
+### \>>[DOWNLOAD](https://github.com/jmsmarcelo/alura-forum-api-rest/releases)<<
+
 ### Configurando o MySQL:
 ```sql
 CREATE DATABASE alurahotel_api;
@@ -45,4 +48,5 @@ java -D"spring.profiles.active=prod" -DJWT_SECRET=12345678 -DDATASOURCE_URL=jdbc
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
-### \>>[DOWNLOAD](https://github.com/jmsmarcelo/alura-forum-api-rest/releases)<<
+
+![alura-forum-api](https://github.com/jmsmarcelo/alura-forum-api-rest/assets/32857346/69289af5-ba50-42d3-9a25-9ac485de0caa)

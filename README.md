@@ -26,3 +26,18 @@
 - [Java](https://www.java.com/)
 - [Spring Boot 3](https://start.spring.io/)
 - [Token JWT](https://jwt.io/)
+
+## Aplicativo:
+### Requisitos:
+  - MySQL 8
+  - Java 17 ou superior
+### Configurando o MySQL:
+```sql
+CREATE DATABASE alurahotel_api;
+```
+### executando o aplicativo com o CMD[^1]:
+[^1]: execute o CMD na pasta onde está o aplicativo
+```cmd
+java -D"spring.profiles.active=prod" -DJWT_SECRET=12345678 -DDATASOURCE_URL=jdbc:mysql://localhost/aluraforum_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar alura-forum-api-rest-v0.1.0.jar
+```
+### \>>[DOWNLOAD]()<<

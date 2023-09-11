@@ -33,7 +33,7 @@
   - MySQL 8
   - Java 17 ou superior
 
-### \>>[DOWNLOAD](https://github.com/jmsmarcelo/alura-forum-api-rest/releases)<<
+### \>>[DOWNLOAD BETA VERSION](https://github.com/jmsmarcelo/alura-forum-api-rest/releases)<<
 
 ### Configurando o MySQL:
 ```sql

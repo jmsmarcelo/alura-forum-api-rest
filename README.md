@@ -40,4 +40,8 @@ CREATE DATABASE alurahotel_api;
 ```cmd
 java -D"spring.profiles.active=prod" -DJWT_SECRET=12345678 -DDATASOURCE_URL=jdbc:mysql://localhost/aluraforum_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar alura-forum-api-rest-v0.1.0.jar
 ```
+### Guia completo das funcões da API, quando o aplicativo em execução:
+```
+http://localhost:8080/swagger-ui/index.html
+```
 ### \>>[DOWNLOAD](https://github.com/jmsmarcelo/alura-forum-api-rest/releases)<<

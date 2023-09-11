@@ -50,3 +50,5 @@ http://localhost:8080/swagger-ui/index.html
 ```
 
 ![alura-forum-api](https://github.com/jmsmarcelo/alura-forum-api-rest/assets/32857346/69289af5-ba50-42d3-9a25-9ac485de0caa)
+
+![badge](https://github.com/jmsmarcelo/alura-forum-api-rest/assets/32857346/0438c48a-e857-406f-8889-2722c315c6f3)

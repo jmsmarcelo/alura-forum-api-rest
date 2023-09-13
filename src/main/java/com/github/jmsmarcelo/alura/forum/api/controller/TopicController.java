@@ -2,6 +2,7 @@ package com.github.jmsmarcelo.alura.forum.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.jmsmarcelo.alura.forum.api.domain.topic.TopicData;
-import com.github.jmsmarcelo.alura.forum.api.domain.topic.TopicDataDetail;
 import com.github.jmsmarcelo.alura.forum.api.domain.topic.TopicDataRecord;
 import com.github.jmsmarcelo.alura.forum.api.domain.topic.TopicDataUpdate;
 import com.github.jmsmarcelo.alura.forum.api.domain.topic.TopicRepository;
@@ -35,49 +35,46 @@ public class TopicController {
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<TopicDataDetail> add(
+	public ResponseEntity<?> add(
 			@RequestBody @Valid TopicDataRecord data) {
-		var td = topicData.add(data);
-		return ResponseEntity.ok(new TopicDataDetail(td));
+		return ResponseEntity.ok(topicData.add(data));
 	}
-	@PutMapping("/{id}")
+	@PutMapping
 	@Transactional
-	public ResponseEntity<TopicDataDetail> update(
-			@RequestBody @Valid TopicDataUpdate data, @PathVariable Long id) {
-		return ResponseEntity.ok(topicData.update(data, id));
+	public ResponseEntity<?> update(
+			@RequestBody @Valid TopicDataUpdate data) {
+		return ResponseEntity.ok(topicData.update(data));
 	}
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> disable(@PathVariable Long id) {
-		var topic = repository.findByIdAndActiveTrue(id);
+		var topic = repository.getByIdAndActiveTrue(id);
 		topic.disable();
 		return ResponseEntity.ok("Topic removed");
 	}
 	@GetMapping
-	public ResponseEntity<Page<TopicDataDetail>> listAll(
+	public ResponseEntity<Page<?>> listAll(
 			@PageableDefault(size=10, sort={"creationDate"}) Pageable pageable) {
 		var page = repository.findAllAndActiveTrue(pageable);
 		return ResponseEntity.ok(page);
 	}
-	@GetMapping("/course/id/{courseId}")
-	public ResponseEntity<Page<TopicDataDetail>> listByCourse(
+	@GetMapping("/course-id")
+	public ResponseEntity<Page<?>> listByCourse(
 			@PageableDefault(size=10, sort={"creationDate"})
 			@PathVariable Long courseId, Pageable pageable) {
 		var page = repository.findByCourseId(courseId, pageable);
 		return ResponseEntity.ok(page);
 	}
 	@GetMapping("/year/{year}")
-	public ResponseEntity<Page<TopicDataDetail>> listByYear(
+	public ResponseEntity<Page<?>> listByYear(
 			@PageableDefault(size=10, sort={"creationDate"})
 			@PathVariable Long year, Pageable pageable) {
 		var page = repository.findByYearAndActiveTrue(year, pageable);
 		return ResponseEntity.ok(page);
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<TopicDataDetail> getById(
-			@PageableDefault(size=10, sort={"creationDate"})
-			@PathVariable Long id) {
-		var topic = repository.getReferenceById(id);
-		return ResponseEntity.ok(new TopicDataDetail(topic));
+	public ResponseEntity<Page<?>> getById(@PathVariable Long id) {
+		var list = repository.findByIdAndActiveTrue(id);
+		return ResponseEntity.ok(new PageImpl<>(list));
 	}
 }

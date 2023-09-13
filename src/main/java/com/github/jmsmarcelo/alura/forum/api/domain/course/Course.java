@@ -28,4 +28,5 @@ public class Course {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id")
 	private Category category;
+	private Boolean active;
 }

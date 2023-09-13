@@ -16,4 +16,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 			""")
 	Page<List<String>> findAllSelectCategory(Pageable pageable);
 
+	boolean existsByIdAndActiveTrue(Long courseId);
+
+	Course getByIdAndActiveTrue(Long courseId);
+
 }

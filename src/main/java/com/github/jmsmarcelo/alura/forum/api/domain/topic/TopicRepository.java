@@ -1,5 +1,7 @@
 package com.github.jmsmarcelo.alura.forum.api.domain.topic;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,10 +19,11 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
 	Boolean existsByTitleAndActiveFalse(String title);
 	Boolean existsByMessageAndActiveTrue(String message);
 	Boolean existsByMessageAndActiveFalse(String message);
-	Topic findByIdAndActiveTrue(Long id);
+	List<TopicDataDetail> findByIdAndActiveTrue(Long id);
 	@Query("""
 			SELECT t FROM Topic t
 				WHERE t.active=true
 			""")
 	Page<TopicDataDetail> findAllAndActiveTrue(Pageable pageable);
+	Topic getByIdAndActiveTrue(Long id);
 }

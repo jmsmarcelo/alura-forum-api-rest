@@ -14,7 +14,7 @@ public class CourseData {
 	
 	public CourseDataDetail add(CourseDataRecord data) {
 		var category = categoryRepository.getReferenceById(data.categoryId());
-		var course = new Course(null, data.name(), category);
+		var course = new Course(null, data.name(), category, true);
 		courseRepository.save(course);
 		return new CourseDataDetail(course);
 	}

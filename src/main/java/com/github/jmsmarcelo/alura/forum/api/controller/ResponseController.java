@@ -1,7 +1,10 @@
 package com.github.jmsmarcelo.alura.forum.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +30,9 @@ public class ResponseController {
 	public ResponseEntity<ResponseDataDetail> add(
 			@RequestBody @Valid ResponseDataRecord data) {
 		return ResponseEntity.ok(responseData.add(data));
+	}
+	@GetMapping("/topic-{id}")
+	public ResponseEntity<?> listByTopic(@PathVariable Long id, Pageable pageable){
+		return ResponseEntity.ok(responseData.byTopic(id, pageable));
 	}
 }

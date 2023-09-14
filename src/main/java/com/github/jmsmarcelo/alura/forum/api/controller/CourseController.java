@@ -37,7 +37,6 @@ public class CourseController {
 		return ResponseEntity.ok(courseData.add(data));
 	}
 	@GetMapping
-	@Secured(value={"ROLE_ADMIN"})
 	public ResponseEntity<?> pageAll(
 			@PageableDefault(size=10, sort={"category"})Pageable pageable) {
 		var page = repository.findAll(pageable).map(CourseDataDetail::new);

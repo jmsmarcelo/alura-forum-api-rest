@@ -62,4 +62,7 @@ public class Topic {
 	public void disable() {
 		this.active = false;
 	}
+	public void unsolved() {
+		this.status = TopicStatus.UNSOLVED;
+	}
 }

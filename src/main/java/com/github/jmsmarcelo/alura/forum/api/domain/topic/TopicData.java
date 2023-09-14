@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.jmsmarcelo.alura.forum.api.base.InfoData;
-import com.github.jmsmarcelo.alura.forum.api.base.InfoData.DataFormat;
+import com.github.jmsmarcelo.alura.forum.api.base.InfoData.DataDetail;
 import com.github.jmsmarcelo.alura.forum.api.base.InfoData.Status;
 import com.github.jmsmarcelo.alura.forum.api.domain.Data;
 import com.github.jmsmarcelo.alura.forum.api.domain.topic.validations.ValidatorTopicDelete;
@@ -33,7 +33,7 @@ public class TopicData extends Data {
 		topic.update(data);
 		return new TopicDataDetail(topic);
 	}
-	public DataFormat delete(Long id) {
+	public DataDetail delete(Long id) {
 		deleteValidators.validate(id);
 		var topic = topicRepository.getByIdAndActiveTrue(id);
 		topic.disable();

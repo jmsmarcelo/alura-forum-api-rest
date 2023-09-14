@@ -1,17 +1,17 @@
 package com.github.jmsmarcelo.alura.forum.api.base;
 
 public class InfoData {
-	public static DataFormat get(Status status, String msg) {
+	public static DataDetail get(Status status, String msg) {
 		Data.status = status;
 		Data.msg = msg;
-		return new DataFormat();
+		return new DataDetail();
 	}
 	private class Data {
 		private static Status status;
 		private static String msg;
 	}
-	public record DataFormat(Status status, String message) {
-		public DataFormat() {
+	public record DataDetail(Status status, String message) {
+		public DataDetail() {
 			this(Data.status, Data.msg);
 		}
 	}

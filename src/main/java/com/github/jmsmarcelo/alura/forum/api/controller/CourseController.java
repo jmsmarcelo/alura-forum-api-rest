@@ -1,12 +1,10 @@
 package com.github.jmsmarcelo.alura.forum.api.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,25 +32,27 @@ public class CourseController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<CourseDataDetail> add(@RequestBody @Valid CourseDataRecord data) {
+	@Secured(value={"ROLE_ADMIN"})
+	public ResponseEntity<?> add(@RequestBody @Valid CourseDataRecord data) {
 		return ResponseEntity.ok(courseData.add(data));
 	}
 	@GetMapping
-	public ResponseEntity<Page<CourseDataDetail>> pageAll(
+	@Secured(value={"ROLE_ADMIN"})
+	public ResponseEntity<?> pageAll(
 			@PageableDefault(size=10, sort={"category"})Pageable pageable) {
 		var page = repository.findAll(pageable).map(CourseDataDetail::new);
 		return ResponseEntity.ok(page);
 	}
-	@GetMapping("/{category}")
-	public ResponseEntity<Page<CourseDataDetail>> listByCategory(
-			@PageableDefault(size=10, sort={"name"})@PathVariable String category, Pageable pageable) {
-		var page = repository.findByCategory(category, pageable);
+	@GetMapping("/category-{id}")
+	public ResponseEntity<?> listByCategory(
+			@PageableDefault(size=10, sort={"name"})@PathVariable Long id, Pageable pageable) {
+		var page = repository.findByCategoryIdAndActiveTrue(id, pageable);
 		if(page.isEmpty())
 			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok(page);
 	}
 	@GetMapping("/categories")
-	public ResponseEntity<Page<List<String>>> listCategories(@PageableDefault(size=10, sort={"name"})Pageable pageable) {
+	public ResponseEntity<?> listCategories(@PageableDefault(size=10, sort={"name"})Pageable pageable) {
 		var page = repository.findAllSelectCategory(pageable);
 		return ResponseEntity.ok(page);
 	}

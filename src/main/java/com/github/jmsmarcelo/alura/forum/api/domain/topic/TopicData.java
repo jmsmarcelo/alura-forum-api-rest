@@ -1,40 +1,42 @@
 package com.github.jmsmarcelo.alura.forum.api.domain.topic;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.jmsmarcelo.alura.forum.api.domain.course.CourseRepository;
+import com.github.jmsmarcelo.alura.forum.api.base.InfoData;
+import com.github.jmsmarcelo.alura.forum.api.base.InfoData.DataFormat;
+import com.github.jmsmarcelo.alura.forum.api.base.InfoData.Status;
+import com.github.jmsmarcelo.alura.forum.api.domain.Data;
+import com.github.jmsmarcelo.alura.forum.api.domain.topic.validations.ValidatorTopicDelete;
 import com.github.jmsmarcelo.alura.forum.api.domain.topic.validations.ValidatorTopicRecord;
 import com.github.jmsmarcelo.alura.forum.api.domain.topic.validations.ValidatorTopicUpdate;
-import com.github.jmsmarcelo.alura.forum.api.domain.user.UserLogged;
 
 @Service
-public class TopicData {
+public class TopicData extends Data {
 	@Autowired
-	private TopicRepository topicRepository;
+	private ValidatorTopicRecord recordValidators;
 	@Autowired
-	private CourseRepository courseRepository;
+	private ValidatorTopicUpdate updateValidators;
 	@Autowired
-	private List<ValidatorTopicRecord> recordValidators;
-	@Autowired
-	private List<ValidatorTopicUpdate> updateValidators;
-	@Autowired
-	private UserLogged userLogged;
+	private ValidatorTopicDelete deleteValidators;
 	
 	public TopicDataDetail add(TopicDataRecord data) {
-		recordValidators.forEach(v -> v.validate(data));
+		recordValidators.validate(data);
 		var topic = new Topic(data, userLogged.get(),
 				courseRepository.getReferenceById(data.courseId()));
 		topicRepository.save(topic);
 		return new TopicDataDetail(topic);
 	}
 	public TopicDataDetail update(TopicDataUpdate data) {
-		updateValidators.forEach(v -> v.validate(data));
+		updateValidators.validate(data);
 		var topic = topicRepository.getByIdAndActiveTrue(data.id());
 		topic.update(data);
 		return new TopicDataDetail(topic);
 	}
-	
+	public DataFormat delete(Long id) {
+		deleteValidators.validate(id);
+		var topic = topicRepository.getByIdAndActiveTrue(id);
+		topic.disable();
+		return InfoData.get(Status.DELETED , "This topic has been deleted!");
+	}
 }

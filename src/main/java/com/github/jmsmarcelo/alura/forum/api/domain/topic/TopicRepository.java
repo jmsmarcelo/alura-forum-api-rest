@@ -26,4 +26,5 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
 			""")
 	Page<TopicDataDetail> findAllAndActiveTrue(Pageable pageable);
 	Topic getByIdAndActiveTrue(Long id);
+	boolean existsByIdAndActiveTrue(Long id);
 }

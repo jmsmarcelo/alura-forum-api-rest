@@ -48,9 +48,7 @@ public class TopicController {
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> disable(@PathVariable Long id) {
-		var topic = repository.getByIdAndActiveTrue(id);
-		topic.disable();
-		return ResponseEntity.ok("Topic removed");
+		return ResponseEntity.ok(topicData.delete(id));
 	}
 	@GetMapping
 	public ResponseEntity<Page<?>> listAll(
@@ -58,14 +56,14 @@ public class TopicController {
 		var page = repository.findAllAndActiveTrue(pageable);
 		return ResponseEntity.ok(page);
 	}
-	@GetMapping("/course-id")
+	@GetMapping("/course-{id}")
 	public ResponseEntity<Page<?>> listByCourse(
 			@PageableDefault(size=10, sort={"creationDate"})
-			@PathVariable Long courseId, Pageable pageable) {
-		var page = repository.findByCourseId(courseId, pageable);
+			@PathVariable Long id, Pageable pageable) {
+		var page = repository.findByCourseId(id, pageable);
 		return ResponseEntity.ok(page);
 	}
-	@GetMapping("/year/{year}")
+	@GetMapping("/year-{year}")
 	public ResponseEntity<Page<?>> listByYear(
 			@PageableDefault(size=10, sort={"creationDate"})
 			@PathVariable Long year, Pageable pageable) {

@@ -9,12 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-	Page<CourseDataDetail> findByCategory(String category, Pageable pageable);
+	Page<CourseDataDetail> findByCategoryIdAndActiveTrue(Long categoryId, Pageable pageable);
 
 	@Query("""
 			SELECT c.category FROM Course c 
 			""")
-	Page<List<String>> findAllSelectCategory(Pageable pageable);
+	List<String> findAllSelectCategory(Pageable pageable);
 
 	boolean existsByIdAndActiveTrue(Long courseId);
 

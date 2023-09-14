@@ -39,15 +39,15 @@ public class ErrorHandler {
 		return ResponseEntity.badRequest().body(get(ex));
 	}
 	
-	private Object[] get(Exception err) {
-				return new Object[] {new ErrorDataException(err)};
+	private ErrorDataException get(Exception err) {
+				return new ErrorDataException(err);
 	}
 	private record ErrorDataValidation(String field, String message) {
 		public ErrorDataValidation(FieldError err) {
 			this(err.getField(), err.getDefaultMessage());
 		}
 	}
-	private record ErrorDataException(String error, String message) {
+	private record ErrorDataException(String status, String message) {
 		public ErrorDataException(Exception ex) {
 			this(ex.getCause().toString(), ex.getMessage());
 		}

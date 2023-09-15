@@ -2,7 +2,6 @@ package com.github.jmsmarcelo.alura.forum.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -47,32 +46,31 @@ public class TopicController {
 	}
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> disable(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		return ResponseEntity.ok(topicData.delete(id));
 	}
 	@GetMapping
-	public ResponseEntity<Page<?>> listAll(
+	public ResponseEntity<Page<?>> pageAll(
 			@PageableDefault(size=10, sort={"creationDate"}) Pageable pageable) {
 		var page = repository.findAllAndActiveTrue(pageable);
 		return ResponseEntity.ok(page);
 	}
 	@GetMapping("/course-{id}")
-	public ResponseEntity<Page<?>> listByCourse(
+	public ResponseEntity<Page<?>> pageByCourse(
 			@PageableDefault(size=10, sort={"creationDate"})
 			@PathVariable Long id, Pageable pageable) {
 		var page = repository.findByCourseId(id, pageable);
 		return ResponseEntity.ok(page);
 	}
 	@GetMapping("/year-{year}")
-	public ResponseEntity<Page<?>> listByYear(
+	public ResponseEntity<Page<?>> pageByYear(
 			@PageableDefault(size=10, sort={"creationDate"})
 			@PathVariable Long year, Pageable pageable) {
 		var page = repository.findByYearAndActiveTrue(year, pageable);
 		return ResponseEntity.ok(page);
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<Page<?>> getById(@PathVariable Long id) {
-		var list = repository.findByIdAndActiveTrue(id);
-		return ResponseEntity.ok(new PageImpl<>(list));
+	public ResponseEntity<?> getById(@PathVariable Long id) {
+		return ResponseEntity.ok(repository.findByIdAndActiveTrue(id));
 	}
 }
